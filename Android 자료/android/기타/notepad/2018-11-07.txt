@@ -1,0 +1,33 @@
+자료형 - 데이터형(숫자, 문자, 기호 등 크기)
+
+자료구조 - 어떻게 메모리에 저장할 것인가, 구조체(선형, 비선형)
+
+알고리즘 - 문제를 해결하는 절차, 순서(정렬, 검색)
+
+
+$ 사용자 권한
+
+# 루트 권한
+
+
+
+
+
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+sd 카드 사용허가
+마시멜로 (Android 6.0, API 23)부터는 보안 모델이 강화되어 각 앱마다 파일, 사진, 미디어 등의 액세스 할 수 있도록 코딩해야한다.
+
+자바코드에서는 ActivityCompat.requestPermission() 메소드를 사용하면 된다.
+이 메소드는 사용자가 거부/허용을 선택할 수 있는 대화상자가 나오는데 허용을 클릭해야 파일등에 접근이 가능하다.
+
+
+
+리눅스 명령어 정리
+
+pwd(print working directory)
+ls(list)
+cd(change directory)
+..(상위 디렉토리)
+. (현재 디렉토리)
+

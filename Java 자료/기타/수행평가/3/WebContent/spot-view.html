@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+	integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+	crossorigin="anonymous">
+<link rel="stylesheet" href="css/main.css">
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/common.js"></script>
+<script type="text/javascript"
+	src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=yJBH6udesOrddgffwWZB&submodules=geocoder"></script>
+<style>
+.thumb:hover {
+	cursor: pointer
+}
+
+#map {
+	width: 100%;
+	height: 480px;
+}
+</style>
+<script> 
+$(function() {
+	var params = {};
+
+	var str =location.search.substr(1).split('&')	// '?' 오른쪽 문자열 추출
+						.forEach(item=>{
+							//'=' 문자로 분리해서 params 객체의 필드로 추가
+							var str2=item.split('=');
+							params[str2[0]]=str2[1];
+						})
+	
+	/* 구글맵 적용시
+	function loadMap(item){
+	// 북촌마을,	
+	var lat = 37.5824075;
+	var lng = 126.9814644;
+	
+	var map = new GMaps({
+		el:'#map',			// 지도 영역 엘리먼트
+		lat:lat,			// 위도
+		lng:lng,			// 경도
+		zoom:18,			// 확대비율
+		zoomControl:true	// 확대 컨트로 출력 여부
+	})
+	
+	map.addMarker({
+		lat : lat,
+		lng: lng,
+		title:item.title,
+		click:function(e){
+			
+		},
+		mouseover:function(e){
+		
+		},
+		infoWindow:{
+			content:`<img src="${item.images[0]}" width="100">
+						<p>${item.title}</p>`
+		}
+	});
+	}
+	*/
+	function loadPage(item) {
+		$('#title').text(item.title);
+		var imagelist = item.images.map(item=>
+							`<img src="${item}" class="thumb w-25">`)
+								.join('');
+		var str= `<div class="row">
+				<div class="col-md-4 spot-images">
+					<img src="${item.images[0]}" class="img-fluid">
+					<div>${imagelist}</div>
+				</div>
+				<div class="col-md-8 py-3">
+					<p><span class="font-weight-bold">No</span> ${item.id}</p>
+					<p><span class="font-weight-bold">장소</span> ${item.title}</p>
+					<p><span class="font-weight-bold">권역</span> ${item.region}</p>
+					<p><span class="font-weight-bold">지역</span> ${item.location}</p>
+					<p><span class="font-weight-bold">주소</span> ${item.address}</p>
+					<p><span class="font-weight-bold">홈페이지</span>
+						<a href="${item.homePage}" target="_black">
+						바로가기<i class="fas fa-external-link-alt"></i></a></p>
+					</div>
+				</div>
+				<div class="row my-3">
+					<div class="col-sm-12">${item.content}</div>
+				</div>`;
+		
+		$('#panel').append(str);
+
+	}
+	
+	$('#panel').on('click','.thumb',function(){
+		var src=$(this).attr('src');
+		$(this).closest('.spot-images')
+				.find('img:first').attr('src',src);
+	});
+	
+	$.get('data/top100.json',function(data){
+		var item=data[params.id];
+		
+		loadPage(item);
+		loadMap(item);
+	});
+	
+	$('.back').click(()=>{history.back()});
+	
+    var map = new naver.maps.Map('map');
+	
+    function loadMap(item){
+    
+    	var myaddress = item.address;// 도로명 주소나 지번 주소만 가능 (건물명 불가!!!!)
+		//	주소가 여러 개인 경우 구분
+    	var addressArr=item.address.split(',');
+    	console.log(addressArr);
+		addressArr.forEach((myaddress,ix)=>{
+			var title=item.title;
+			if(myaddress.indexOf(':')!=-1){	// 주소지명, 주소 구분
+				var tokens=myaddress.split(':');
+				title=tokens[0];
+				myaddress=tokens[1];
+			}
+		
+   	 		naver.maps.Service.geocode({address: myaddress}, function(status, response) {
+      		  	if (status !== naver.maps.Service.Status.OK) {        	
+           	 		return alert(myaddress + '의 검색 결과가 없거나 기타 네트워크 에러');
+      	 		}
+       			var result = response.result;
+        		// 검색 결과 갯수: result.total
+        		// 첫번째 결과 결과 주소: result.items[0].address
+        		// 첫번째 검색 결과 좌표: result.items[0].point.y, result.items[0].point.x
+        		var myaddr = new naver.maps.Point(result.items[0].point.x, result.items[0].point.y);
+        
+        		if(ix==0){
+        		map.setCenter(myaddr); // 검색된 좌표로 지도 이동        	
+        		}
+        
+        		// 마커 표시
+        		var marker = new naver.maps.Marker({
+          			position: myaddr,
+         		 	map: map
+        		});
+        		// 마커 클릭 이벤트 처리
+        		naver.maps.Event.addListener(marker, "click", function(e) {
+          			if (infowindow.getMap()) {
+              			infowindow.close();
+          			} else {
+              			infowindow.open(map, marker);
+          			}
+        		});
+        	// 마크 클릭시 인포윈도우 오픈
+        		var infowindow = new naver.maps.InfoWindow({
+            		content: `<img src="${item.images[0]}" width="100">
+							<p>${item.title}</p>`
+        		});
+			});
+    	});
+	}; 
+}); 
+</script>
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron text-white py-4 mb-0 rounded-0"></div>
+		<nav
+			class="navbar navbar-expand-sm bg-dark
+			navbar-dark sticky-top"></nav>
+
+		<h2 class="my-5">
+			<i class="fas fa-thumbs-up"></i> <span id="title"></span>
+		</h2>
+
+		<div id="panel"></div>
+
+		<div id="map"></div>
+
+		<div class="text-center my-5">
+			<button type="button" class="btn btn-outline-primary back">
+				<i class="far fa-star"></i>돌아가기
+			</button>
+		</div>
+		<footer class="mt-5 bg-primary myname"></footer>
+	</div>
+</body>
+</html>

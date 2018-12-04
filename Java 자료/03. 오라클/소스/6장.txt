@@ -1,0 +1,57 @@
+select *
+from employees, departments;
+
+select *
+from employees, departments
+where employees.department_id=departments.department_id;
+
+
+select first_name, last_name, department_name, employees.department_id
+from employees, departments
+where employees.department_id=departments.department_id;
+
+select first_name, last_name, department_name, e.department_id
+from employees e, departments d
+where e.department_id=d.department_id;
+
+select last_name, salary
+from employees e,departments d
+where e.department_id=d.department_id and department_name='Purchasing';
+
+select d.department_name, last_name, hire_date
+from employees e, departments d
+where e.employee_id=d.manager_id; 
+
+select department_name,count(*)||'명' as 명
+from employees e, departments d
+where e.department_id = d.department_id
+group by department_name;
+
+select department_name, city, last_name, salary
+from employees e, departments d, locations l
+where e.department_id=d.department_id and d.location_id=l.location_id and
+        department_name='Purchasing';
+        
+select emp.last_name||'의 매니저는 '||mgr.last_name||' 입니다.'
+from employees emp, employees mgr
+where emp.manager_id=mgr.employee_id and emp.department_id=90;
+
+select e.last_name, e.job_id
+from employees e, employees m
+where e.manager_id=m.employee_id and m.last_name='King';
+
+select e.last_name, j.last_name
+from employees e, employees j
+where e.department_id = j.department_id
+        and e.last_name='Jones'
+        and j.last_name<>'Jones';
+
+select emp.last_name||'의 매니저는 '||mgr.last_name||' 입니다.'
+from employees emp, employees mgr
+where emp.manager_id=mgr.employee_id(+);
+
+SELECT e.first_name, e.last_name, d.department_id, d.department_name
+FROM employees e, departments d
+WHERE e.department_id = d.department_id(+)
+ORDER BY d.department_id;
+            

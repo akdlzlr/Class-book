@@ -1,0 +1,34 @@
+
+java 관련 사이트
+
+
+https://docs.oracle.com/javase/8/docs/api/
+
+http://mvnrepository.com/
+
+http://www.tutorialspoint.com/
+
+http://java2s.com/
+
+https://www.data.go.kr/			=	공공데이터포털
+
+www.w3schools.com			=	html 태그 설명이 있다
+
+www.fontawesome.com
+
+nodejs.org				= 	nodejs 다운 받는 사이트
+
+MDN javascript
+
+http://jquery.com
+
+https://www.npmjs.com/
+
+git-scm.com
+
+
+apache.org
+
+https://mdbootstrap.com/
+
+http://spring.io

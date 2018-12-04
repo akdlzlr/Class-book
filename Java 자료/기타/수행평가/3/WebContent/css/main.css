@@ -1,0 +1,9 @@
+.jumbotron{
+	background-image:url('../images/Lighthouse.jpg');
+	background-size: 100% 250px;
+}
+
+.nav.navbar-nav li a {
+    color: black;
+}
+

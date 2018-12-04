@@ -1,0 +1,69 @@
+select sum(salary) from employees
+where employee_id = 0;
+-- employee_id가 0일 때(행이 없을때), 결과값으로 행하나가 출력됨
+-- nvl(sum(salary),0)로 하면 널값을 0으로 바꿈
+-- 그룹함수는 null값은 제외하고 계산한다.
+select sum(commission_pct) from employees;
+
+select avg(salary)
+from employees;
+
+select max(salary)||','||min(salary) "max, min"
+from employees;
+
+select count(commission_pct)
+from employees;
+
+select count(*), count(commission_pct)
+from employees;
+
+select count(distinct department_id)
+from employees;
+
+select count(employee_id) "총 사원수", ceil(count(employee_id)/10) "총 페이지수"
+from employees;
+-- round 반올림 ceil 올림
+
+select max(hire_date), min(hire_date)
+from employees;
+
+-- 방법 1 is not null로 제거
+select count(employee_id)
+from employees
+where department_id=80 and commission_pct is not null;
+-- 방법 2 카운팅에서 null값 제거
+select count(commission_pct)
+from employees
+where department_id=80;
+
+select department_id
+from employees
+group by department_id;
+
+select department_id, round(avg(salary),2)
+from employees
+group by department_id;
+
+select department_id,max(salary),min(salary)
+from employees
+group by department_id;
+
+select department_id,sum(salary),round(avg(salary),2) as avg_salary
+from employees
+group by department_id
+order by avg_salary desc;
+
+select department_id, count(*), count(commission_pct), sum(commission_pct)
+from employees
+group by department_id;
+-- count는 대상 행이 없으면 0, sum은 null
+
+select department_id,round(avg(salary))
+from employees
+group by department_id
+having round(avg(salary))>5000;
+
+select department_id, max(salary),MIN(salary)
+from employees
+group by department_id
+having max(salary)>6000;

@@ -1,0 +1,3 @@
+alter user iot account unlocked;
+
+alter user iot identified by "1234";

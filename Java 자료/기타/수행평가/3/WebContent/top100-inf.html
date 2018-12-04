@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Scorpio3</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+	integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/main.css">
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/common.js"></script>
+<script src="js/pagination.js"></script>
+<style>
+	.thumb:hover{
+		cursor: pointer
+	}
+</style>
+<script>
+$(function() {	
+
+	var list, page=1;	
+	
+	function loadPage(page) {
+		var start = (page-1)*10;
+		var end = start + 10;
+		var pageList = list.slice(start, end);
+		
+		var str = pageList.map(item=>{
+			var imagelist = item.images.map(item=>
+							`<img src="${item}" class="thumb w-25">`)
+								.join('');
+		return `<div class="row">
+				<div class="col-md-4 spot-images">
+					<img src="${item.images[0]}" class="img-fluid">
+					<div>${imagelist}</div>
+				</div>
+				<div class="col-md-8 py-3">
+					<p><span class="font-weight-bold">No</span> ${item.id}</p>
+					<p><span class="font-weight-bold">장소</span> ${item.title}</p>
+					<p><span class="font-weight-bold">권역</span> ${item.region}</p>
+					<p><span class="font-weight-bold">지역</span> ${item.location}</p>
+					<p><span class="font-weight-bold">주소</span> ${item.address}</p>
+					<p><span class="font-weight-bold">홈페이지</span>
+						<a href="${item.homePage}" target="_black">
+						바로가기<i class="fas fa-external-link-alt"></i></a></p>
+					</div>
+				</div>
+				<div class="row my-3">
+					<div class="col-sm-12">${item.content}</div>
+				</div>`
+				}).join('<hr class="my-5"/>');
+		
+		$('#panel').append(str);
+	}
+	
+	$('#panel').on('click','.thumb',function(){
+		var src=$(this).attr('src');
+		$(this).closest('.spot-images')
+				.find('img:first').attr('src',src);
+	});
+	
+	$.get('data/top100.json', function(data) {
+		list = data;
+		/*
+		list.forEach(item=>
+					item.images=images.shuffle().slice(0,4));
+		console.log(JSON.stringify(list));
+		*/
+		loadPage(page++);
+	});
+
+/* 	
+	$(window).scroll(function(){
+		var scrollHeight = $(window).scrollTop() + $(window).height();
+		var documentHeight = $(document).height();
+		if(scrollHeight > documentHeight-100) { 
+			loadPage(page++);
+		}
+	});
+	 */
+	
+	/*$.scroll(()=>loadPage(page++));*/
+	
+	
+});
+</script>
+</head>
+<body>
+	<div class="container ">
+		<div class="jumbotron text-white py-4 mb-0 rounded-0"></div>
+		<nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top"></nav>
+
+		<h2 class="my-5">
+			<i class="fas fa-thumbs-up"></i> Top 100
+		</h2>
+
+		<div class="text-right mb-1">
+			<span>보기 모드</span>
+			<div class="btn-group">
+				<a href="top100.html" class="btn btn-primary btn-sm"> <i
+					class="fas fa-table"></i>
+				</a> <a href="#" class="btn btn-success btn-sm"> <i
+					class="fas fa-bars"></i>
+				</a>
+			</div>
+		</div>
+
+		<div id="panel"></div>
+		<footer class="mt-5 bg-primary myname"></footer>
+	</div>
+</body>
+</html>
+
+
+

@@ -1,0 +1,21 @@
+Capricorn 개발환경 설정
+
+메이븐으로 컨버팅후 pom.xml에서 base를 부모로 삼음
+
+커먼 프로젝트 빌드패스에서 추가, 디플로이먼트 추가
+
+
+
+bower install xxxxxx
+
+반응형 웹 = response web
+
+
+
+member를 다루는 서비스를 따로 모아 인터페이스화하고
+servlet은 service의 결과만 가지고 실행하게 분할한다.
+
+servlet(controller) => service => dao
+
+mvc 패턴
+

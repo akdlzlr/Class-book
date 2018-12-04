@@ -1,0 +1,19 @@
+MybatisTest 프로젝트 설정
+
+1. 프로젝트 생성
+new] -> spring legacy project
+	spring mvc project
+	edu.iot.mybatis_test
+
+2. 프로젝트 설정
+ - project properties
+
+ - pom.xml 설정
+
+3. context 설정
+	extension-context.xml
+	servlet-context.xml
+4. tiles 설정
+	tiles-layout.xml
+5. web.xml 설정
+	extension-context.xml 추가

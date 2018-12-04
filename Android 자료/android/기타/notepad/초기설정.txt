@@ -1,0 +1,12 @@
+
+
+compile 'com.android.support:support-annotations:27.1.1'
+
+
+
+싱크 나우 클릭!
+
+
+구글 API 키
+
+AIzaSyCs34ZqC8ZOhwA00spfpwEcdD55T4YKJ30

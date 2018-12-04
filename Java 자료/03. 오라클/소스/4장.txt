@@ -1,0 +1,138 @@
+select 24*60
+from employees;
+
+select *
+from dual;
+
+desc dual;
+
+select 24*60 from dual;
+
+select sysdate from dual;
+
+select 34.5678, round(34.5678)
+from dual;
+
+select round(34.5678,2) from dual;
+
+select round(34.5678, -1) from dual;
+-- 음수일 경우 첫째자리 까지
+
+select ceil(34.5678) from dual;
+
+select *
+from employees
+where mod(employee_id,2)=1;
+
+select length('oracle'), length('오라클')
+from dual;
+
+select lengthb('oracle'), lengthb('오라클')
+from dual;
+
+select substr('다양한 예제로 쉽게 배우는 오라클',5,6) from dual;
+
+select substr('다양한 예제로 쉽게 배우는 오라클',-8,6) from dual;
+
+select substr(hire_date, 1,2)입사년도,substr(hire_date,4,2)월
+from employees;
+
+select employee_id,first_name||' '||last_name
+from employees
+where substr(hire_date,4,2)='09';
+
+select *
+from employees
+where last_name like '%n';
+
+select *
+from employees
+where substr(last_name,-1,1)='n';
+
+select *
+from employees
+where substr(hire_date,4,2)= substr(sysdate,4,2);
+
+select instr('welcome to oracle','o',6,2)
+from dual;
+
+select first_name
+from employees
+where instr(first_name,'r',3)=3;
+
+select first_name
+from employees
+where substr(first_name,3,1)='r';
+
+select lpad('oracle',20,'#') from dual;
+
+select rpad('oracle',20,'#') from dual;
+
+select ltrim('   oracle    ') from dual;
+select rtrim('   oracle    ') from dual;
+
+select trim('a' from 'aaaaaaaaOracleaaaaaaa')
+from dual;
+
+select trim('      Oracle      ')
+from dual;
+
+select sysdate-50 어제, sysdate+50 내일 from dual;
+
+select first_name||' '||last_name, round(sysdate-hire_date)
+from employees
+order by hire_date;
+
+select hire_date, round(hire_date, 'month')
+from employees;
+
+select round(sysdate,'day')
+from dual;
+
+select sysdate "오늘 날짜", next_day(sysdate,'수요일') "다음 수요일"
+from dual;
+
+select hire_date,last_day(hire_date)
+from employees;
+
+select sysdate, to_char(sysdate,'yyyy-mm-dd') from dual;
+select sysdate, to_char(sysdate,'yyyy-mm-dd day') from dual;
+select sysdate, to_char(sysdate,'yyyy-mm-dd dy') from dual;
+
+select to_char(sysdate,'yyyy/mm/dd, pm') from dual;
+
+select to_char(1230000) from dual;
+
+select to_char(salary,'l999,999') from employees;
+
+select to_char(123456,'000000000'), to_char(123456,'99999999') from dual;
+-- overflow는 #처리
+
+select last_name
+from employees
+where hire_date=to_date(20020816,'yyyymmdd');
+
+select department_id,
+        decode(department_id,
+                10, 'A',
+                20, 'B',
+                'DEFAULT')
+from employees
+order by department_id;
+
+select last_name, department_id,
+            decode(department_id,
+            10,'Administration',
+            20,'Marketing',
+            30,'purchasing',
+            40,'Human Resources',
+            'DEFAULT') AS DNAME
+from employees;
+
+select last_name, department_id,
+        case when department_id=10 THEN 'Administration'
+             when department_id=20 THEN 'Marketing'
+             when department_id=30 THEN 'Purchasing'
+             when department_id=40 THEN 'Human Resources'
+        END AS DNAME
+from employees;

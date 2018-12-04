@@ -1,0 +1,38 @@
+select * from employees;
+
+
+select * from departments;
+
+desc employees;
+
+select employee_id, email FROM employees;
+
+select last_name, salary, salary*12
+from employees
+order by salary;
+
+-- 널값으로 하였을때
+select last_name, salary, commission_pct, salary*12,
+        salary*12+salary*12*commission_pct
+from employees;
+
+-- NVL로 null을 0으로 처리하였을때
+select last_name, salary, NVL(commission_pct,0), salary*12,
+        salary*12+salary*12*NVL(commission_pct,0) "연봉"
+from employees
+order by "연봉" desc;
+
+select last_name,' is a ',JOB_ID
+from employees;
+
+select last_name||' is a '||JOB_ID
+from employees;     -- ||는 결합연산자
+
+select department_id
+from employees;
+
+select distinct department_id
+from employees;
+
+select distinct job_id
+from employees;

@@ -1,0 +1,80 @@
+vt : 가상화기술
+
+가상화 지원 툴 - virtual box, docker, vmware
+
+archive - 데이터 집합 저장소
+
+주버전, 부버전, 패치버전
+
+ide - 통합 개발 환경
+
+jar - java archive 
+
+웹 - sublime
+
+빌드 - 컴파일 + link
+
+link - 라이브러리 연결해주는 것
+
+PIP(picture in picture) - 다른 Activity를 계속 하면서 고정창에서 동영상 실행, 화면안에 화면
+
+OHA(Open Handset Alliance) - 2007년에 구글이 모바일 장치용 운영체제를 무료로 공개하기 위해 만든 컨소시엄
+
+유닉스(상용) -> 리눅스(자유롭게 사용하게 하자)
+커널(운영체제의 핵심소스) vs 쉘(사용자 명령하는 입력하는 창)
+
+킷캣 버전(4.4) 달빅 가상머신을 제공했으며, 아트는 롤리팝부터 사용, 빠른 실행을 보이는 아트 런타임을 제공한다.
+
+스키마 - 틀
+
+실습환경 - 오레오 8 API 26
+
+VM(가상메모리) - 주기억장치의 용량을 보조기억장치에서 일부 빌린다.
+
+
+
+
+
+
+Backward Compatibility (AppCompt)
+ - 하위 호환성을 위한 AppCompat 액티비티를 사용한다는 의미이다. 체크를 끄면 구버전 Activity 액티비가 사용된다.
+
+
+
+
+레이아웃 - 화면 배치에 관한것
+
+
+
+
+
+en 접두어 make - encoding <-> decoding
+캐릭터 셋 (문자들의 집합)
+ASCII	asxiitable.com
+UNICODE utf-8
+
+
+compile 'com.android.support:support-annotations:27.1.1'
+싱크 나우 클릭!
+
+
+
+
+
+xmlns - 이름공간 어디선가 이 이름을 정의하고 있다
+
+
+
+
+
+
+
+
+C:\Program Files\Android\Android Studio	-	 안드로이드 
+
+C:\Users\student\AndroidStudioProjects	-	사용자가 만든 프로젝트
+
+C:\Users\student\AppData\Local\Android\Sdk	-	sdk 위치 제일 중요함!!!!!!!!!!!
+
+C:\Users\student\.AndroidStudio3.0		-	안드로이드 설정파일 경로
+

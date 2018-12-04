@@ -1,0 +1,44 @@
+.carousel {
+	position : relative;
+	width:600px;
+	height:400px;
+	margin:0 auto;
+}
+.carousel img{
+	position : absolute;
+	width : 100%;
+	height : 100%;
+}
+.carousel>a {	
+	display : block;
+	position : absolute;
+	color : white;
+	font-size : 40px;
+	width : 80px;
+	text-align : center;
+	line-height : 400px;
+}
+.carousel>a.prev {left: 0;}
+.carousel>a.next {right : 0;}
+
+.indicator {
+	position : absolute;
+	bottom : 0;
+	width : 100%;
+	height : 30px;	
+	text-align: center;
+}
+
+a.indicator-item {
+	background : white;
+	display : inline-block;
+	width : 15px;
+	height: 15px;
+	border-radius: 50%;
+	margin : 2px 2px;
+}
+
+a.indicator-item.active {
+	background : navy;
+	border: white solid 1px;
+} 

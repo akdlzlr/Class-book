@@ -1,0 +1,23 @@
+
+auto commit = 프로그램이 종료 될때?
+
+트랜잭션 개념은 DML 명령어에서만 적용 된다. DDL의 명령은 적용 X
+
+connection, statement, resultset 객체로 이루어짐
+
+트랜잭션은 커넥션에 있다
+
+딕셔너리에 있는 조건명은 대문자로 검색해야함
+
+Create
+Read
+update
+Delete
+
+
+ORM (Object Realationship Model)
+-> JPA,Hibernate
+
+XRM(XML Relationship Model)
+->MyBatis
+

@@ -1,0 +1,103 @@
+create table dept_copy
+as
+select * from departments;
+
+create table emp_copy
+as
+select * from employees;
+
+select *
+from emp_copy
+where department_id=30;
+
+create view emp_view30
+as
+select employee_id, last_name, department_id
+from emp_copy
+where department_id=30;
+
+select * from emp_view30;
+-- 원본 내용이 바뀌면 뷰도 바뀐다.
+
+------------------------------------------------------------------------
+-- 컬럼에 별칭 부여하기
+
+create or replace
+view emp_view(사원번호, 사원명, 급여, 부서번호)
+as
+select employee_id,last_name,salary, department_id
+from emp_copy;
+
+select * from emp_view;
+
+select view_name,text
+from user_views;
+
+-------------------------------------------------------------------
+-- create or replace 는 없으면 만들고 있으면 서브쿼리만 대체한다.
+-- 뷰는 삭제를 하지 않고 사용한다.
+
+create or replace
+view emp_dept_view
+as
+select e.employee_id, e.last_name full_name,
+        e.salary, d.department_id, d.department_name
+from emp_copy e, dept_copy d
+where e.department_id = d.department_id
+order by e.employee_id desc;
+
+SELECT * FROM EMP_dept_VIEW;
+
+-------------------------------------------------------------------------
+-- TOP-N 구하기
+
+select rownum, employee_id, last_name, hire_date
+from employees;
+
+select rownum, employee_id, last_name, hire_date
+from employees
+order by hire_date;
+
+create or replace view view_hire
+as
+select employee_id, last_name, hire_date
+from employees
+order by hire_date;
+
+select rownum,employee_id,last_name,hire_date
+from view_hire
+where rownum<=5;
+
+------------------------------------------------------------------------
+-- TOP-N 구하기 2
+create or replace view view_salary
+as
+select employee_id, last_name, salary
+from employees
+order by salary desc;
+
+select rownum, employee_id,last_name, salary
+from view_salary
+where rownum<=5;
+
+-----------------------------------------------------------------------
+-- TOP-N 구하기 3
+SELECT rownum, employee_id, last_name, hire_date
+FROM ( SELECT employee_id, last_name, hire_date
+FROM employees
+ORDER BY hire_date)
+WHERE rownum <= 5;
+-- rownum>=3 rownum은 > 비교를 해주지 않는다.
+-- rownum은 일반 컬럼이 아니라 특수한 컬럼(의사 컬럼)이다.
+------------------------------------------------------------------------
+-- rownum -> row_number()
+select *
+from(select row_number() over ( order by salary desc)as seq,
+        employee_id, last_name, salary
+        from employees)
+where seq between 11 and 20;
+
+
+
+
+

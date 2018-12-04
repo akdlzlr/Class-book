@@ -1,0 +1,105 @@
+select employee_id, first_name||' '||last_name,salary
+from employees
+where salary >=10000;
+
+select *
+from employees
+where department_id =10;
+
+select employee_id, first_name||' '||last_name,salary
+from employees
+where salary<=3000
+order by salary desc;
+
+select employee_id, first_name, last_name, salary
+from employees
+where last_name='King';
+
+select *
+from employees
+where hire_date<='2003/01/01';
+
+select * 
+from employees
+where department_id=110 AND job_id='AC_MGR';
+
+select *
+from departments
+where department_id=110;
+
+select * 
+from employees
+where department_id=110 or job_id='AC_MGR';
+
+select *
+from employees
+where salary >=5000 and salary<=7000;
+
+select *
+from employees
+where salary between 2000 and 3000;
+
+select *
+from employees
+where salary not between 2000 and 3000;
+
+select *
+from employees
+where hire_date between '2003/01/01' and '2003/12/31';
+
+select *
+from employees
+where commission_pct not in(0.1,0.2,0.3,0.4);
+
+select first_name||' '||last_name, salary
+from employees
+where employee_id in(116,186,204);
+
+select first_name||' '||last_name, salary
+from employees
+where employee_id <> 116 and employee_id <> 186 and employee_id <> 204;
+
+select first_name||' '||last_name, salary
+from employees
+where employee_id not in(116,186,204);
+
+select *
+from employees
+where last_name like '%k%';
+
+select *
+from employees
+where last_name like '%n';
+
+select *
+from employees
+where last_name not like '_a%';
+
+select *
+from employees
+where commission_pct is null;
+
+select *
+from employees
+where commission_pct is not null;
+
+select *
+from employees
+where manager_id is null;
+
+select last_name, salary, hire_date
+from employees
+order by salary, hire_date desc;
+-- salary는 오름차순(생략),date는 내림차순
+
+select employee_id,first_name||' '||last_name,hire_date
+from employees
+order by hire_date;
+
+select employee_id,first_name||' '||last_name
+from employees
+order by employee_id desc;
+
+select employee_id, hire_date, first_name||' '||last_name, salary
+from employees
+order by department_id, hire_date desc;

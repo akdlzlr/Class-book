@@ -1,0 +1,44 @@
+-- 시퀀스의 생성
+
+create sequence dept_deptno_seq
+increment by 10
+start with 100;
+
+desc user_sequences;
+
+-- 확인
+select dept_deptno_seq.nextval from dual;
+
+select dept_deptno_seq.currval from dual;
+
+----------------------------------------------------------------------------
+-- 시퀀스는 insert의 values에서 많이 쓰인다.
+create sequence emp_seq
+    start with 1
+    increment by 1
+    maxvalue 100000;
+
+drop table emp01;
+
+create table emp01(
+    empno number(4) primary key,
+    ename varchar2(10),
+    hiredate date);
+    
+insert into emp01
+values(emp_seq.nextval, 'JULIA',sysdate);
+insert into emp01
+values(emp_seq.nextval, 'NIKE',sysdate);
+insert into emp01
+values(emp_seq.nextval, 'ADIDAS',sysdate);
+insert into emp01
+values(emp_seq.nextval, 'FILA',sysdate);
+insert into emp01
+values(emp_seq.nextval, 'SQL',sysdate);
+insert into emp01
+values(emp_seq.nextval, 'IPHONE',sysdate);
+insert into emp01
+values(emp_seq.nextval, 'TIGER',sysdate);
+select * from emp01;
+
+-----------------------------------------------------------------------

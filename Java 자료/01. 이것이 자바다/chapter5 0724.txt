@@ -1,0 +1,33 @@
+
+열거 타입
+
+
+public enum 열거타입이름 {...}
+열거 상수는 대문자로 열거 한다.
+상수의 명명관례
+
+
+
+ - Calendar 클래스
+
+Calendar.DAY_OF_ WEEK;	:	요일
+		 MONTH;	:	달
+		 YEAR;	:	연도
+		 SECOND;:	초
+		 MINUTE;:	분
+		 HOUR;	: 	시간
+
+
+
+
+get	:	꺼내는 것
+set	:	설정하는 것
+
+
+Week today = Week.SUNDAY;
+String a = Week.SUNDAY;			: 	컴파일 에러
+String a = today.name();	:	매개변수 사용
+
+
+
+

@@ -1,0 +1,10 @@
+base(Maven 공통 의존성)
+
+SpringCommon(공통모듈)
+
+Aquarius(특화된 MVC Project)
+
+
+
+
+프로젝트->특성->Web Project Setting

@@ -1,0 +1,5 @@
+http://localhost:8080/scorpio3/spot-view.html?id=23
+
+search : "?id=23"
+
+substr(1)하면 ?뒤에 값만 얻을수 있다.

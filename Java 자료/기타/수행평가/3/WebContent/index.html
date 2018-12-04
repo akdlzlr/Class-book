@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<link rel="stylesheet" href="css/main.css">
+
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="bower_components/popper.js/dist/umd/popper.min.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="js/common.js"></script>
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script> 
+$(function() {
+
+	$.get('data/famoussaying.json',function(data){
+		var ix=random(data.length);
+		var saying=data[ix];
+		
+		$('.blockquote p').text(saying.statement);
+		$('.blockquote-footer').text(saying.who);
+	});
+	
+	var list;
+	
+	function loadDeck(){
+		list.forEach(item=>{
+			var str =`<div class="col-md-4 mb-3">
+			<div class="card shadow bg-white">
+				<img class="card-img-top w-50" src="${item.images[0]}">
+				<div  class="card-body">
+					<h4 class="card-title">
+					<a href="spot-view.html?id=${item.id-1}">${item.title}</a> <small>${item.region}</small>
+					</h4>
+					<p class="card=text">${item.content.substr(0,50)}</p>
+					<a class="card-link" href="${item.homePage}" target="_black">
+					<i class="fab fa-internet-explorer">홈페이지</i></a>
+					</div>
+				</div>
+			</div>`;
+			$('.card-deck').append(str);
+		})
+	}
+	
+	$.get('data/top100.json',function(data){
+		list = data.shuffle().slice(0,9);
+		loadDeck();
+	})
+	
+}); 
+</script>
+</head>
+<body>
+<div class="container">
+	<div class="jumbotron text-white py-4 mb-0 rounded-0"></div>
+	<nav class="navbar navbar-expand-sm bg-dark
+			navbar-dark sticky-top"></nav>
+	<h2 class="my-3">오늘의 명언</h2>
+	<div class="card saying-panel p-3 m-3 rounded">
+		<blockquote class="card-body blockquote">
+			<p></p>
+			<footer class="blockquote-footer text-right"></footer>
+		</blockquote>
+	</div>
+	<h2>추천 여행지</h2>
+	<div class="row card-deck"></div>
+	<footer class="mt-5 bg-primary myname"></footer>
+</div>
+</body>
+</html>

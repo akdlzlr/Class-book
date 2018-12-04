@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.iot.common.dao.BoardDao">
+
+	<select id="count" resultType="int">
+	<![CDATA[
+		SELECT count(*)
+		FROM board
+	]]></select>
+	
+	
+	<select id="getPage" parameterType="map" resultType="Board"><![CDATA[
+		SELECT board_id, title, writer, read_cnt, reg_date
+		FROM(
+			select row_number() over (order by reg_date desc) as seq,
+				board_id, title, writer, read_cnt, reg_date
+			from board
+		)
+		where seq between #{start} and #{end}
+		order by board_id desc
+	]]></select>
+	
+	<insert id="insert" parameterType="Board" keyColumn="board_id" keyProperty="boardId">
+	<![CDATA[
+		insert into board
+			(board_id, title, writer, password, read_cnt, content, reg_date, update_date)
+		values(board_SEQ.NEXTVAL, #{title}, #{writer},#{password},0,#{content},sysdate,sysdate)
+	]]>
+	</insert>
+	
+	<update id="increaseReadCnt" parameterType="long"><![CDATA[
+		update board set
+			read_cnt = read_cnt+1
+		where board_id=#{boardId}
+	]]></update>
+	
+	<select id="findById" parameterType="long" resultType="Board"><![CDATA[
+		select * from board
+		where board_id=#{boardId}
+	]]></select>
+	
+	<update id="update" parameterType="Board">
+		UPDATE board SET
+			title=#{title},
+			content=#{content},
+			update_date=sysdate
+		WHERE board_id=#{boardId} and password=#{password}
+	</update>	
+	
+	<delete id="delete" parameterType="long">
+		DELETE FROM board
+		WHERE board_id=#{boardId}
+	</delete>
+</mapper>
+
+
+
+
+

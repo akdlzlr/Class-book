@@ -1,0 +1,211 @@
+-- commit, rollback 예제
+create table emp_test
+as
+select * from employees;
+
+select * from emp_test
+where department_id=30;
+
+delete from emp_test
+where department_id=30;
+
+commit;
+
+select count(*) from emp_test;
+
+rollback;
+
+----------------------------------------------------------------------------
+-- 제약조건 확인
+select constraint_name, constraint_type, table_name
+from user_constraints;
+
+select * from user_cons_columns;
+
+----------------------------------------------------------------------------
+--not null에 null을 입력할때
+drop table emp04;
+
+create table emp04(
+    empno number(4) not null,
+    ename varchar2(10) not null,
+    job varchar2(9),
+    deptno number(2));
+    
+insert into emp04
+values(null,null,'SALESMAN',10);
+
+----------------------------------------------------------------------------
+-- 유니크
+
+drop table emp04;
+
+create table emp04(
+    empno number(4) unique,
+    ename varchar2(10) not null,
+    job varchar2(9),
+    deptno number(2));
+    
+insert into emp04
+values(7449,'jones','SALESMAN',10);
+    
+insert into emp04
+values(7450,'jones','SALESMAN',10);
+
+insert into emp04
+values(7450,'kei','SALESMAN',10);
+    
+insert into emp04
+values(null,'jones','SALESMAN',10);
+
+insert into emp04
+values(null,'jones','SALESMAN',10);   
+
+----------------------------------------------------------------------------
+-- 컬럼 레벨로 제약 조건명 명시하기
+ drop table emp04;
+ 
+ create table emp04(
+    empno number(4) constraint emp04_empno_uk unique,
+    ename varchar2(10) constraint emp04_ename_nn not null,
+    job varchar2(9),
+    deptno number(2));
+
+insert into emp04
+values(7449,'jones','SALESMAN',10);
+    
+insert into emp04
+values(7450,'jones','SALESMAN',10);
+
+insert into emp04
+values(7450,'kei','SALESMAN',10);
+    
+insert into emp04
+values(null,'jones','SALESMAN',10);
+
+insert into emp04
+values(null,'jones','SALESMAN',10); 
+
+-------------------------------------------------------------------------
+-- 외래키
+-- 부모 테이블
+drop table dept06;
+
+create table dept06(
+    deptno number(4) primary key,
+    dname varchar2(20) not null,
+    loc varchar2(20));
+
+insert into dept06 values(10,'SALES', 'SEATTLE');
+insert into dept06 values(20,'ACCOUNTING', 'DALAS');
+insert into dept06 values(30,'MARKETING', 'NEW YORK');
+
+-- 자식테이블
+drop table emp06;
+
+create table emp06(
+    empno number(4) constraint emp06_empno_pk primary key,
+    ename varchar2(10) constraint emp06_ename_nn not null,
+    job varchar2(9),
+    deptno number(2) constraint emp06_deptno_fk
+                    references dept06(deptno) -- 외래키!
+                    );
+insert into emp06
+VALUES(7566, 'JONES', 'MANAGER', 50);
+
+INSERT INTO EMP06 
+VALUES(7566, 'JONES', 'MANAGER', 20);
+
+DELETE DEPT06 WHERE DEPTNO = 20;
+
+------------------------------------------------------------------------
+-- check 제약 조건 설정
+
+drop table emp07;
+
+create table emp07(
+        empno number(4) constraint emp07_empno_pk primary key,
+        ename varchar2(10) constraint emp07_ename_nn not null,
+        sal number(7,2) constraint emp07_sal_ck
+                        check(sal between 500 and 5000),
+        gender char(1) constraint emp07_gender_ck
+                        check(gender in('M','F'))
+);
+
+insert into emp07
+values(7499,'MIKE',200,'M');
+
+-----------------------------------------------------------------------
+-- default값 설정, null값이 들어오면 특정한 값으로 대입함
+
+drop table dept07;
+
+create table dept07(
+        deptno number(2) primary key,
+        dname varchar2(14),
+        loc varchar2(20) default 'SEoul');
+
+insert into dept07(deptno,dname)
+values(10,'accounting');
+
+insert into dept07(deptno,dname,loc)
+values(11,'accounting',null);
+
+select * from dept07;
+
+-------------------------------------------------------------------------
+-- 테이블 레벨에서 제약조건 설정하기
+
+drop table emp06;
+
+create table emp06(
+    empno number(4),
+    ename varchar2(10),
+    job varchar2(9),
+    deptno number(2),
+    primary key(empno),
+    unique(job),
+    foreign key(deptno) references dept06(DEPTNO)
+    );
+    
+-------------------------------------------------------------------------
+drop table member01;
+create table member01(
+name varchar2(10),
+address varchar2(30) unique,
+hphome varchar2(16),
+constraint mamember01_combo_pk primary key(name,hphome));
+
+select constraint_name, constraint_type
+from user_constraints
+where table_name='MEMBER01';
+
+select * from user_cons_columns
+where table_name='MEMBER01';
+
+-----------------------------------------------------------------------
+-- 제약 조건 추가하기
+
+create table member02(
+name varchar2(10),
+address varchar2(30),
+hphome varchar2(16)
+);
+
+alter table member02
+add constraint mem02_name_pk primary key(name);
+
+alter table member02
+add constraint mem02_address_fk 
+            foreign key(address) references member01(address);
+
+--------------------------------------------------------------------------
+-- 제약 조건 제거
+
+alter table member02
+drop primary key;
+
+---------------------------------------------------------------------------
+
+
+

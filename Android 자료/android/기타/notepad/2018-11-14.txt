@@ -1,0 +1,5 @@
+C:\Program Files\Android\Android Studio\jre\bin
+
+C:\Users\student\.android\debug.keystore
+
+27:22:21:CC:98:EC:0B:8A:46:2C:F7:11:08:81:60:DE:7B:89:C8:19
